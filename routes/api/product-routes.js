@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const sequelize = require('../../config/connection')
 const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // The `/api/products` endpoint
@@ -14,6 +15,22 @@ router.get('/', (req, res) => {
       'price',
       'stock',
       'category_id'
+    ],
+    include: [
+      {
+        model: Category,
+        attributes: ['category_name']
+      },
+      {
+        model: ProductTag,
+        attributes: ['id', 'tag_id'],
+        include: [
+          {
+            model: Tag,
+            attributes: ['tag_name']
+          }
+        ]
+      }
     ]
   })
   .then(dbProductData => res.json(dbProductData))
@@ -37,6 +54,22 @@ router.get('/:id', (req, res) => {
       'price',
       'stock',
       'category_id'
+    ],
+    include: [
+      {
+        model: Category,
+        attributes: ['category_name']
+      },
+      {
+        model: ProductTag,
+        attributes: ['id', 'tag_id'],
+        include: [
+          {
+            model: Tag,
+            attributes: ['tag_name']
+          }
+        ]
+      }
     ]
   })
   .then(dbProductData => {
@@ -65,8 +98,8 @@ router.post('/', (req, res) => {
   Product.create(req.body)
     .then((product) => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
-      if (req.body.tagIds.length) {
-        const productTagIdArr = req.body.tagIds.map((tag_id) => {
+      if (req.body.tag_id.length) {
+        const productTagIdArr = req.body.tag_id.map((tag_id) => {
           return {
             product_id: product.id,
             tag_id,
