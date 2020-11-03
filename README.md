@@ -22,7 +22,7 @@ npm i
 ## Usage:
 
 Here is a link a tutorial video that wlaks you through exactly how to use this app!<br><br>
-https://drive.google.com/file/d/14LQoto-IWJN6z9pez-ruAwbdZRegJTmI/view
+https://drive.google.com/file/d/158eEPu7DB82dBqGJMqBRGS2lMqNK-93u/view
 
 <br><br>
 
